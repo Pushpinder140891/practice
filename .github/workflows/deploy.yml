@@ -1,0 +1,26 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - user-controller-changes
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Setup SSH
+      uses: webfactory/ssh-agent@v0.5.0
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    - name: Add EC2 host to known hosts
+      run: ssh-keyscan -H 172.31.3.109>> ~/.ssh/known_hosts
+
+    - name: Deploy to EC2
+      run: |
+        ssh ec2-user@172.31.3.109 "cd /home/ec2-user/kennel_aws_project && git pull origin main"
