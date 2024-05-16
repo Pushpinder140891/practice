@@ -27,6 +27,7 @@ jobs:
     - name: Set key
       run: |
         mkdir -p ~/.ssh
+        cat $secrets.SSH_PRIVATE_KEY
         echo "$secrets.SSH_PRIVATE_KEY" >> ~/.ssh/Key.pem
         chmod 400 ~/.ssh/Key.pem
         cd ~/.ssh/
