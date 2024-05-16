@@ -22,7 +22,7 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
-        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+        ssh-private-key: ${{ secrets.SSH_KEY }}
         aws-region: ap-south-1
 
     #- name: Add EC2 host to known hosts
@@ -31,9 +31,9 @@ jobs:
     - name: Deploy to EC2
       run: |
         mkdir -p ~/.ssh
-        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+        echo "$SSH_KEY" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
         ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ec2-user@ec2-3-111-41-198.ap-south-1.compute.amazonaws.com "cd /home/ec2-user/git_action && git pull origin main"
       env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY }}
 
