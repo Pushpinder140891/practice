@@ -24,7 +24,7 @@ jobs:
         aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
         aws-region: ap-south-1
 
-    - name: Deploy to EC2
+    - name: Set key
       run: |
         mkdir -p ~/.ssh
         echo "$secrets.SSH_PRIVATE_KEY" >> ~/.ssh/key.pem
@@ -32,7 +32,7 @@ jobs:
         
     - name: Connect SSH
       run: |
-        ssh -o StrictHostKeyChecking=no -i ~/.ssh/key.pem ec2-user@ec2-3-111-41-198.ap-south-1.compute.amazonaws.com
+        ssh -t -o StrictHostKeyChecking=no -i ~/.ssh/key.pem ec2-user@ec2-3-111-41-198.ap-south-1.compute.amazonaws.com
         cd /home/ec2-user/git_action/practice
         git pull origin main
 
