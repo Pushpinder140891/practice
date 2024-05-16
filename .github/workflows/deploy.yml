@@ -22,7 +22,6 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
-        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
         aws-region: ap-south-1
 
   #   - name: Add EC2 host to known hosts
