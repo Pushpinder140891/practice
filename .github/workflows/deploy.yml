@@ -30,7 +30,7 @@ jobs:
         chmod 700 ~/.ssh
         touch ~/.ssh/known_hosts
         chmod 600 ~/.ssh/known_hosts
-        ssh-keyscan ec2-user@ec2-3-111-41-198.ap-south-1.compute.amazonaws.com >> ~/.ssh/known_hosts
+        ssh-keyscan ec2-user@3.111.41.198 >> ~/.ssh/known_hosts
 
     - name: Deploy to EC2
       run: |
