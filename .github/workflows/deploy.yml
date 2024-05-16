@@ -32,9 +32,6 @@ jobs:
         
     - name: Connect SSH
       run: |
-        ssh -t -o StrictHostKeyChecking=no -i ~/.ssh/key.pem ec2-user@ec2-3-111-41-198.ap-south-1.compute.amazonaws.com < /dev/null
-
-        cd /home/ec2-user/git_action/practice
-        git pull origin main
+        ssh -o StrictHostKeyChecking=no -i ~/.ssh/key.pem ec2-user@ec2-3-111-41-198.ap-south-1.compute.amazonaws.com "cd /home/ec2-user/git_action/practice && git pull origin main"
 
 
