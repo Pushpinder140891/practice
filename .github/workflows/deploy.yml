@@ -29,6 +29,9 @@ jobs:
         mkdir -p ~/.ssh
         echo "$secrets.SSH_PRIVATE_KEY" >> ~/.ssh/Key.pem
         chmod 400 ~/.ssh/Key.pem
+        cd ~/.ssh/
+        cat Key.pem
+        cd ..
         
     - name: Connect SSH
       run: |
