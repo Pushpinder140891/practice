@@ -24,18 +24,16 @@ jobs:
         aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
         aws-region: ap-south-1
 
-    - name: Add EC2 host to known hosts
-      run: |
-        mkdir -p ~/.ssh
-        chmod 700 ~/.ssh
-        touch ~/.ssh/known_hosts
-        chmod 600 ~/.ssh/known_hosts
-        ssh-keyscan ec2-user@3.111.41.198 >> ~/.ssh/known_hosts
-
     - name: Deploy to EC2
       run: |
+        mkdir -p ~/.ssh
         echo "$secrets.SSH_PRIVATE_KEY" >> ~/.ssh/key.pem
         chmod 400 ~/.ssh/key.pem
-        ssh -o StrictHostKeyChecking=no -i ~/.ssh/key.pem ec2-user@ec2-3-111-41-198.ap-south-1.compute.amazonaws.com "cd /home/ec2-user/git_action/practice && git pull origin main"
+        
+    - name: Connect SSH
+      run: |
+        ssh -o StrictHostKeyChecking=no -i ~/.ssh/key.pem ec2-user@ec2-3-111-41-198.ap-south-1.compute.amazonaws.com
+        cd /home/ec2-user/git_action/practice
+        git pull origin main
 
 
