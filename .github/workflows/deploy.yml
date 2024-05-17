@@ -37,7 +37,7 @@ jobs:
     
     - name: Deploy to EC2
       run: |
-          echo "aws s3 cp s3://${{ env.BUCKET_NAME }} ${{ env.INSTANCE_ID }}/home/ec2-user/git_action/practice"
-          aws s3 cp s3://${{ env.BUCKET_NAME }} ${{ env.INSTANCE_ID }}/home/ec2-user/git_action/practice
+          echo "aws s3 cp s3://${{ env.BUCKET_NAME }} //${{ env.INSTANCE_ID }}/home/ec2-user/git_action/practice"
+          aws s3 cp s3://${{ env.BUCKET_NAME }} //${{ env.INSTANCE_ID }}/home/ec2-user/git_action/practice
 
 
