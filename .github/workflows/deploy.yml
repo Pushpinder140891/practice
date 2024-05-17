@@ -7,6 +7,7 @@ on:
 env:
         BUCKET_NAME: "openid-s3"
         FOLDER_NAME: "All_files"
+        INSTANCE_ID: "i-028ae89c76a8fe103"
 
 jobs:
   deploy:
@@ -36,7 +37,6 @@ jobs:
     
     - name: Deploy to EC2
       run: |
-          INSTANCE_ID="i-028ae89c76a8fe103"
-          aws s3 cp s3://${{ env.BUCKET_NAME }} /home/ec2-user/git_action/practice
+          aws s3 cp s3://${{ env.BUCKET_NAME }} ${{ env.INSTANCE_ID }}/home/ec2-user/git_action/practice
 
 
