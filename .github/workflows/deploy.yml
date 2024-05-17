@@ -29,6 +29,6 @@ jobs:
         mkdir -p ~/.ssh
         echo "${{ secrets.SSH_KEY }}" >> ~/.ssh/Key.pem
         chmod 400 ~/.ssh/Key.pem
-        ssh -o StrictHostKeyChecking=no -i ~/.ssh/Key.pem ec2-user@ec2-3-111-41-198.ap-south-1.compute.amazonaws.com "cd /home/ec2-user/git_action/practice && git pull origin main"
+        ssh -i ~/.ssh/Key.pem ec2-user@ec2-3-111-41-198.ap-south-1.compute.amazonaws.com "cd /home/ec2-user/git_action/practice && git pull origin main"
 
 
