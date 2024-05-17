@@ -4,40 +4,20 @@ on:
   push:
     branches:
       - main
-env:
-        BUCKET_NAME: "openid-s3"
-        FOLDER_NAME: "All_files"
-        INSTANCE_ID: "i-028ae89c76a8fe103"
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-
-    - name: Set up Node.js 20.x
-      uses: actions/setup-node@v3
-      with:
-        node-version: '20.x'
-
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v4
-      with:
-        aws-access-key-id: ${{ secrets.ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
-        aws-region: ap-south-1
-        
-    - name: Copy entire project to S3
+    - name: Set key
+      id: setup-key
       env:
-        BUCKET_NAME: "openid-s3"
+        DEPLOY_KEY: ${{ secrets.SSH_KEY }}
       run: |
-          aws s3 sync ${{ env.FOLDER_NAME }} s3://${{ env.BUCKET_NAME }}/practice --delete
-    
-    - name: Deploy to EC2
+        mkdir -p ~/.ssh
+        echo "${{ secrets.SSH_KEY }}" >> ~/.ssh/Key.pem
+        chmod 400 ~/.ssh/Key.pem
+        
+    - name: Connect SSH
       run: |
-          echo "aws s3 cp s3://${{ env.BUCKET_NAME }} //${{ env.INSTANCE_ID }}/home/ec2-user/git_action/practice" --recursive
-          aws s3 cp s3://${{ env.BUCKET_NAME }} //${{ env.INSTANCE_ID }}/home/ec2-user/git_action/practice --recursive
-
-
+        ssh -o StrictHostKeyChecking=no -i ~/.ssh/Key.pem ec2-user@ec2-3-111-41-198.ap-south-1.compute.amazonaws.com "cd /home/ec2-user/git_action/practice && git pull origin main"
