@@ -26,7 +26,7 @@ jobs:
         
     - name: Copy entire project to S3
       env:
-        BUCKET_NAME: "<openid-s3>"
+        BUCKET_NAME: "openid-s3"
       run: |
           aws s3 sync . s3://${{ env.BUCKET_NAME }}/ --exclude ".git/*" --delete
 
