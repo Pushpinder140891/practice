@@ -37,6 +37,6 @@ jobs:
     - name: Deploy to EC2
       run: |
           INSTANCE_ID="i-028ae89c76a8fe103"
-          aws s3 cp s3://${{ env.BUCKET_NAME }}/practice /home/ec2-user/git_action/practice
+          aws s3 cp s3://${{ env.BUCKET_NAME }}/practice/ /home/ec2-user/git_action/practice
 
 
