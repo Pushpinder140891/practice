@@ -1,0 +1,33 @@
+Database connection :
+
+Update the below properties in src/main/resources/application.properties file
+
+1. spring.datasource.url=jdbc:postgresql://localhost:5432/test-db
+2. spring.datasource.username=postgres
+3. spring.datasource.password=postgres
+
+
+Tables Creation :
+
+1. Tables information is mentioned in file kennel-management/backend/liquibase/sql/km/db-changelog-1.0.0.xml
+2. Run all the create statements
+
+Run Application :
+
+1. Go to class KmServiceApplication.java
+2. Right click > run as Java application
+3. Go to browser and hit the below url
+  http://localhost:8443/km/v1/appointments-by-slot
+  
+  
+  
+Running Postgres in Docker:
+Pre-requisite - install docker
+
+docker run -itd --name km-postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 -v /Users/shashankchaudhary/postgresql/data:/var/lib/postgresql/data postgres:15.6-alpine
+
+docker exec -it km-postgres /bin/bash
+
+psql -U postgres
+
+create database test;

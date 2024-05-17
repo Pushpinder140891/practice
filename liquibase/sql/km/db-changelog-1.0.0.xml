@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.21.xsd">
+
+  <changeSet author="shashank" id="1.0.0">
+    <tagDatabase tag="1.0.0"/>
+  </changeSet>
+
+  <changeSet author="shashank" id="changelog-1.0.0-1">
+    <sql>
+      create table if not exists km_business (
+         _id_business serial primary key,
+         _tx_business_name varchar(150) not null,
+         _tx_email_address varchar(200) not null,
+         _tx_billing_address varchar(400),
+         unique (_tx_email_address)
+      );
+
+      create index index_km_business_tx_email_address
+        on km_business (_tx_email_address);
+
+    </sql>
+    <rollback>
+      drop table if exists km_business;
+    </rollback>
+  </changeSet>
+
+  <changeSet author="shashank" id="changelog-1.0.0-2">
+    <sql>
+      create table if not exists km_user (
+        _id_user serial primary key,
+        _tx_first_name varchar(100) not null,
+        _tx_second_name varchar(100),
+        _tx_email_address varchar(200) not null,
+        _tx_password text not null,
+        _id_business integer not null,
+          unique(_tx_email_address)
+        );
+
+       create index index_km_user_tx_email_address
+        on km_user (_tx_email_address);
+
+    </sql>
+    <rollback>
+      drop table if exists km_user;
+    </rollback>
+  </changeSet>
+
+  <changeSet author="shashank" id="changelog-1.0.0-3">
+    <sql>
+      create table if not exists km_facility (
+        _id_facility serial primary key,
+        _id_business integer not null,
+        _tx_facility_name varchar(100) not null,
+        _id_facility_address  varchar(255) not null
+        );
+
+    </sql>
+    <rollback>
+      drop table if exists km_facility;
+    </rollback>
+  </changeSet>
+
+  <changeSet author="shashank" id="changelog-1.0.0-4">
+    <sql>
+      create table if not exists km_facility_address (
+        _id_facility_address serial primary key,
+        _tx_address_line_1 varchar(100) not null,
+        _tx_address_line_2 varchar(255),
+        _tx_city varchar(255) not null,
+        _tx_state integer not null
+        );
+    </sql>
+    <rollback>
+      drop table if exists km_facility_address;
+    </rollback>
+  </changeSet>
+
+  <changeSet author="shashank" id="changelog-1.0.0-5">
+    <sql>
+      create table if not exists km_appointment (
+        _id_appointment bigserial primary key,
+        _id_facility integer not null,
+        _id_business integer not null,
+        _id_service integer not null,
+        _id_pet integer not null,
+        _nu_appointment_state varchar(30) not null,
+        _ts_appointment timestamp not null,
+        _ts_created timestamp not null
+        );
+
+      create index index_km_appointment_id_facility
+        on km_appointment (_id_facility);
+      create index index_km_appointment_id_service
+        on km_appointment (_id_service);
+      create index index_km_appointment_id_pet
+        on km_appointment (_id_pet);
+      create index index_km_appointment_id_business
+        on km_appointment (_id_business);
+    </sql>
+    <rollback>
+      drop table if exists km_appointment;
+    </rollback>
+  </changeSet>
+
+  <changeSet author="shashank" id="changelog-1.0.0-6">
+    <sql>
+      create table if not exists km_services (
+        _id_service serial primary key,
+        _tx_service_name varchar(100) not null
+        );
+    </sql>
+    <rollback>
+      drop table if exists km_services;
+    </rollback>
+  </changeSet>
+
+  <changeSet author="shashank" id="changelog-1.0.0-7">
+    <sql>
+      create table if not exists km_facility_services (
+        _id_service integer not null,
+        _id_facility integer not null
+      );
+    </sql>
+    <rollback>
+      drop table if exists km_facility_services;
+    </rollback>
+  </changeSet>
+
+  <changeSet author="shashank" id="changelog-1.0.0-8">
+    <sql>
+      create table if not exists km_customer (
+        _id_customer serial primary key,
+        _tx_first_name varchar(100) not null,
+        _tx_second_name varchar(100),
+        _tx_email_address varchar(200) not null,
+        _id_business integer not null,
+        UNIQUE (_tx_email_address, _id_business)
+        );
+    </sql>
+    <rollback>
+      drop table if exists km_customer;
+    </rollback>
+  </changeSet>
+
+  <changeSet author="shashank" id="changelog-1.0.0-9">
+    <sql>
+      create table if not exists km_customer_pet (
+        _id_pet serial primary key,
+        _tx_first_name varchar(100) not null,
+        _tx_second_name varchar(100),
+        _id_pet_type integer not null,
+        _id_customer integer not null
+        );
+    </sql>
+    <rollback>
+      drop table if exists km_customer_pet;
+    </rollback>
+  </changeSet>
+
+  <changeSet author="shashank" id="changelog-1.0.0-10">
+    <sql>
+      create table if not exists km_pet_type (
+        _id_pet_type serial primary key,
+        _tx_pet_type varchar(100),
+        _tx_pet_breed varchar(100)
+        );
+    </sql>
+    <rollback>
+      drop table if exists km_pet_type;
+    </rollback>
+  </changeSet>
+</databaseChangeLog>
