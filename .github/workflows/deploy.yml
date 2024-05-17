@@ -32,13 +32,6 @@ jobs:
         mkdir -p ~/.ssh
         echo "$secrets.SSH_KEY" >> ~/.ssh/Key.pem
         chmod 400 ~/.ssh/Key.pem
-  
-    - name: executing remote ssh commands using ssh key
-      uses: appleboy/ssh-action@v1.0.3
-      with:
-        host: ${{ secrets.DEPLOY_HOST }}
-        key: ${{ secrets.SSH_KEY }}
-        port: ${{ secrets.PORT }}
         
     - name: Connect SSH
       run: |
