@@ -32,6 +32,13 @@ jobs:
       env:
         BUCKET_NAME: "openid-s3"
       run: |
-          aws s3 sync ${{ env.FOLDER_NAME }} s3://${{ env.BUCKET_NAME }}/ --delete
+          aws s3 sync ${{ env.FOLDER_NAME }} s3://${{ env.BUCKET_NAME }}/practice --delete
+    
+ #   - name: Deploy to EC2
+ #     run: |
+ #         # Define your EC2 instance details
+ #         INSTANCE_ID="i-028ae89c76a8fe103"
+          
+ #         aws s3 cp s3://${BUCKET_NAME}/ /home/ec2-user/
 
 
