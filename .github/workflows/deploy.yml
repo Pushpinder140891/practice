@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - main
+env:
+        BUCKET_NAME: "openid-s3"
+        FOLDER_NAME: "All_files"
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -28,6 +32,6 @@ jobs:
       env:
         BUCKET_NAME: "openid-s3"
       run: |
-          aws s3 sync . s3://${{ env.BUCKET_NAME }}
+          aws s3 sync ${{ env.FOLDER_NAME }} s3://${{ env.BUCKET_NAME }}/ --delete
 
 
