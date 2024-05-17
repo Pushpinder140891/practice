@@ -30,8 +30,7 @@ jobs:
         DEPLOY_KEY: ${{ secrets.SSH_KEY }}
       run: |
         mkdir -p ~/.ssh
-        echo "${{ secrets.SSH_KEY }}"
-        echo "$secrets.SSH_KEY" >> ~/.ssh/Key.pem
+        echo "${{ secrets.SSH_KEY }}" >> ~/.ssh/Key.pem
         chmod 400 ~/.ssh/Key.pem
         
     - name: Connect SSH
