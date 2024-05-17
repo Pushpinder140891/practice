@@ -23,15 +23,6 @@ jobs:
         aws-access-key-id: ${{ secrets.ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
         aws-region: ap-south-1
-
-  #  - name: Set key
-   #   id: setup-key
-    #  env:
-     #   DEPLOY_KEY: ${{ secrets.SSH_KEY }}
-      #run: |
-       # mkdir -p ~/.ssh
-        #echo "${{ secrets.SSH_KEY }}" >> ~/.ssh/Key.pem
-        #chmod 400 ~/.ssh/Key.pem
         
     - name: Connect SSH
       run: |
