@@ -28,6 +28,6 @@ jobs:
       env:
         BUCKET_NAME: "openid-s3"
       run: |
-          aws s3 sync . s3://${{ env.BUCKET_NAME }}/ --exclude ".git/*" --delete
+          aws s3 sync . s3://${{ env.BUCKET_NAME }}
 
 
