@@ -24,11 +24,11 @@ jobs:
         run: |
           cd km-service 
           mvn clean package
-      - run: mkdir staging && cp target/*.jar staging
+   #   - run: mkdir staging && cp target/*.jar staging
       - uses: actions/upload-artifact@v4
         with:
           name: Package
-          path: staging
+          path: target/*.jar
 
   deploy:
    # needs: build
@@ -39,7 +39,7 @@ jobs:
       uses: actions/download-artifact@v2
       with:
           name: Package
-          path: staging
+          path: target/*.jar
 
     - name: Set key
       id: setup-key
