@@ -7,7 +7,7 @@ on:
 run-name: ${{github.actor}} is building the project
 
 jobs:
-  Build-and Deploy-Project:
+  Build-and-Deploy-Project:
     runs-on: ubuntu-latest
     
     steps:
