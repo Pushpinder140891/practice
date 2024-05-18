@@ -28,7 +28,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: Package
-          path: target/
+          path: target/*.jar
 
   deploy:
    # needs: build
@@ -39,7 +39,7 @@ jobs:
       uses: actions/download-artifact@v2
       with:
           name: Package
-          path: target/*.jar
+          path: target/
 
     - name: Set key
       id: setup-key
