@@ -1,8 +1,8 @@
-name: Maven Build Workflow
+name: Deploy Workflow
 run-name: ${{github.actor}} is building the project
 on: [push]
 jobs:
-  Build-Maven-Project:
+  Deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -44,7 +44,7 @@ jobs:
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.DEPLOY_HOST }}
-          username: ec2-user
+#          username: ec2-user
           key: ${{ secrets.SSH_KEY }}
           source: "target/*.jar"
           target: "//home/ec2-user/git_action/practice"
