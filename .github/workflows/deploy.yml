@@ -47,8 +47,8 @@ jobs:
         username: gh-user
         key: ${{ secrets.SSH_KEY }}
         source: "target/*.jar"
-        target: "/home/ec2-user/kennel-aws-project/km-service"
+        target: "//home/ec2-user/git_action/practice"
         
     - name: Connect SSH
       run: |
-        ssh -o StrictHostKeyChecking=no -i ~/.ssh/Key.pem ec2-user@ec2-3-111-41-198.ap-south-1.compute.amazonaws.com "/home/ec2-user/kennel-aws-project/km-service && git pull origin main"
+        ssh -o StrictHostKeyChecking=no -i ~/.ssh/Key.pem ec2-user@ec2-3-111-41-198.ap-south-1.compute.amazonaws.com "/home/ec2-user/git_action/practice && git pull origin main"
