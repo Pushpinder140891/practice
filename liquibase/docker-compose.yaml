@@ -1,1 +1,0 @@
-sudo docker run --name bb-km-mysql-prod -p 3306:3306 --restart unless-stopped -e MYSQL_RANDOM_ROOT_PASSWORD=true -v /var/lib/mysql:/var/lib/mysql -d mysql:8.2.0 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --log_error=/var/lib/mysql/mysql_error.log --general_log_file=/var/lib/mysql/mysql.log
