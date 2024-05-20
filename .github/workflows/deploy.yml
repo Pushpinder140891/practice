@@ -57,4 +57,5 @@ jobs:
           "cd /home/ec2-user/git_action/practice && \
           git pull origin main && \
           sudo kill \$(pgrep -f ${APP_NAME}) || true && \
-          nohup java -jar /home/ec2-user/git_action/practice/${APP_NAME} > /home/ec2-user/git_action/practice/${APP_NAME}.log 2>&1 &"
+          nohup mvn spring-boot:run > output.log 2>&1 &"
+#          nohup java -jar /home/ec2-user/git_action/practice/${APP_NAME} > /home/ec2-user/git_action/practice/${APP_NAME}.log 2>&1 &"
