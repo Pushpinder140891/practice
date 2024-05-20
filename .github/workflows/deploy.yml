@@ -37,7 +37,7 @@ jobs:
         DEPLOY_KEY: ${{ secrets.SSH_KEY }}
       run: |
         mkdir -p ~/.ssh
-        echo "${{ secrets.SSH_KEY }}" >> ~/.ssh/Key.pem
+        echo "${{ secrets.SSH_KEY }}" > ~/.ssh/Key.pem
         chmod 400 ~/.ssh/Key.pem
     
     - name: Copy JAR to EC2
@@ -51,4 +51,4 @@ jobs:
         
     - name: Connect SSH
       run: |
-        ssh -o StrictHostKeyChecking=no -i ~/.ssh/Key.pem ec2-user@ec2-3-111-41-198.ap-south-1.compute.amazonaws.com "/home/ec2-user/git_action/practice && git pull origin main"
+        ssh -o StrictHostKeyChecking=no -i ~/.ssh/Key.pem ec2-user@${{ secrets.DEPLOY_HOST }} "cd /home/ec2-user/git_action/practice && git pull origin main"
