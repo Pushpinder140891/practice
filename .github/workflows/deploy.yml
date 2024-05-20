@@ -41,13 +41,14 @@ jobs:
         chmod 400 ~/.ssh/Key.pem
     
     - name: Copy JAR to EC2
-      uses: appleboy/scp-action@master
-      with:
-        host: ${{ secrets.DEPLOY_HOST }}
-        username: ec2-user
-        key: ${{ secrets.SSH_KEY }}
-        source: "target/*.jar"
-        target: "//home/ec2-user/git_action/practice"
+      run: scp target/*.jar  ec2-user@ec2-3-111-41-198.ap-south-1.compute.amazonaws.com:/home/ec2-user/git_action/practice/
+  #    uses: appleboy/scp-action@master
+   #   with:
+    #    host: ${{ secrets.DEPLOY_HOST }}
+    #    username: ec2-user
+    #    key: ${{ secrets.SSH_KEY }}
+    #    source: "target/*.jar"
+    #    target: "//home/ec2-user/git_action/practice"
         
     - name: Connect SSH
       run: |
