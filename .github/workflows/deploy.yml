@@ -1,6 +1,8 @@
 name: Deploy Workflow
 run-name: ${{github.actor}} is building the project
 on: [push]
+env:
+  APP_NAME: "km-service.jar"
 jobs:
   Deploy:
     runs-on: ubuntu-latest
@@ -51,4 +53,7 @@ jobs:
         
       - name: Connect SSH
         run: |
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/Key.pem ec2-user@${{ secrets.DEPLOY_HOST }} "cd /home/ec2-user/git_action/practice && git pull origin main"
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/Key.pem ec2-user@${{ secrets.DEPLOY_HOST }} 
+          "cd /home/ec2-user/git_action/practice && git pull origin main",
+          "sudo kill $(pgrep -f ${APP_NAME}) || true",
+          "nohup java -jar /home/ec2-user/git_action/practice/${APP_NAME} > /home/ec2-user/git_action/practice/${APP_NAME}.log 2>&1 &"
