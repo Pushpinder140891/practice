@@ -15,40 +15,40 @@ jobs:
           cache: maven
       - name: Build with maven
         run: mvn --batch-mode --update-snapshots clean package
-      - run: mkdir staging && cp target/*.jar staging
-      - uses: actions/upload-artifact@v4
-        with:
-          name: Package
-          path: target/*.jar
-  Deploy:
-    needs: Build-Maven-Project
-    runs-on: ubuntu-latest
+#      - run: mkdir staging && cp target/*.jar staging
+#      - uses: actions/upload-artifact@v4
+#        with:
+#          name: Package
+#          path: target/*.jar
+#  Deploy:
+#    needs: Build-Maven-Project
+#    runs-on: ubuntu-latest
 
-    steps:
-    - name: Download artifacts
-      uses: actions/download-artifact@v4
-      with:
-          name: Package
-          path: target/
+#    steps:
+#    - name: Download artifacts
+#      uses: actions/download-artifact@v4
+#      with:
+#          name: Package
+#          path: target/
 
-    - name: Set key
-      id: setup-key
-      env:
-        DEPLOY_KEY: ${{ secrets.SSH_KEY }}
-      run: |
-        mkdir -p ~/.ssh
-        echo "${{ secrets.SSH_KEY }}" > ~/.ssh/Key.pem
-        chmod 400 ~/.ssh/Key.pem
+      - name: Set key
+        id: setup-key
+        env:
+         DEPLOY_KEY: ${{ secrets.SSH_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/Key.pem
+          chmod 400 ~/.ssh/Key.pem
     
-    - name: Copy JAR to EC2
-      uses: appleboy/scp-action@master
-      with:
-        host: ${{ secrets.DEPLOY_HOST }}
-        username: ec2-user
-        key: ${{ secrets.SSH_KEY }}
-        source: "target/*.jar"
-        target: "//home/ec2-user/git_action/practice"
+      - name: Copy JAR to EC2
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ec2-user
+          key: ${{ secrets.SSH_KEY }}
+          source: "target/*.jar"
+          target: "//home/ec2-user/git_action/practice"
         
-    - name: Connect SSH
-      run: |
-        ssh -o StrictHostKeyChecking=no -i ~/.ssh/Key.pem ec2-user@${{ secrets.DEPLOY_HOST }} "cd /home/ec2-user/git_action/practice && git pull origin main"
+      - name: Connect SSH
+        run: |
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/Key.pem ec2-user@${{ secrets.DEPLOY_HOST }} "cd /home/ec2-user/git_action/practice && git pull origin main"
